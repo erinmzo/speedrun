@@ -80,6 +80,7 @@ const Button = styled.button`
 	border-radius: 6px;
 	opacity: 0px;
 	margin-left: 0;
+	margin-bottom: 45px;
 
 	&:hover {
 		background-color: #d9534f; /* 호버 시 더 어두운 빨간색 */

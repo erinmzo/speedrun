@@ -1,7 +1,29 @@
 import { styled } from "styled-components";
 import ProfileUpdateButton from "./ProfileUpdateButton";
+import { useEffect, useState } from "react";
+import supabase from "../supabase/supabase";
 
 const Profile = () => {
+	const [profileUrl, setProfileUrl] = useState("");
+	const [profileObj, setProfileObj] = useState({});
+	async function getImage() {
+		const { data } = supabase.storage.from("avatars").getPublicUrl("default-user-profile.png");
+		setProfileUrl(data.publicUrl);
+		console.log(profileUrl);
+	}
+	useEffect(() => {
+		getImage();
+	}, []);
+
+	const handleImageChange = async (event) => {
+		const fileObj = event.target.files[0];
+		setProfileObj(fileObj);
+		console.log(fileObj);
+		const { data, error } = await supabase.storage.from("avatars").upload(`avatar_${Date.now()}.png`, fileObj);
+		setProfileUrl(`https://piuvdfomheejtudrutht.supabase.co/storage/v1/object/public/avatars/${data.path}`);
+
+		// const { data, error } = await supabase.storage.from("avatars").upload("public/avatar1.png", fileObj);
+	};
 	return (
 		<StyledProfileBanner>
 			<div className="container">
@@ -10,9 +32,13 @@ const Profile = () => {
 					<ProfileUpdateButton />
 				</StyledProfileHeader>
 				<StyledProfileBox>
-					{/* 프로필 이미지. img 태그로 바꿀 가능성 염두 */}
-					<StyledProfileImg></StyledProfileImg>
-					{/* 아이디. 디자인 내 더미 텍스트 필요성 확인 필요 */}
+					<StyledProfileImgBox>
+						<StyledProfileImg src={profileUrl} />
+						<label for="file">
+							<StyledUploadBtn>이미지 업로드</StyledUploadBtn>
+						</label>
+						<StyledImageChangeInput type="file" name="file" id="file" onChange={handleImageChange} />
+					</StyledProfileImgBox>
 					<div>
 						<StyledProfileId>아이디</StyledProfileId>
 						<StyledProfileContext>
@@ -50,12 +76,31 @@ const StyledProfileBox = styled.div`
 	margin-top: 91px;
 	gap: 59px;
 `;
-const StyledProfileImg = styled.div`
+const StyledUploadBtn = styled.div`
+	margin-top: 20px;
+	cursor: pointer;
+	border: none;
+	text-align: center;
+	width: auto;
+	display: inline-block;
+	background-color: #2c2b2f;
+	padding: 17px 35px;
+	color: #fff;
+	font-size: 20px;
+	border-radius: 9px;
+`;
+const StyledProfileImgBox = styled.div`
+	text-align: center;
+`;
+const StyledProfileImg = styled.img`
 	width: 371px;
 	height: 371px;
-	background-color: #d9d9d9;
 	border-radius: 50%;
 	flex: 0 0 auto;
+	object-fit: cover;
+`;
+const StyledImageChangeInput = styled.input`
+	display: none;
 `;
 const StyledProfileId = styled.p`
 	font-size: 48px;
