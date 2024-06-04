@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import supabase from "../supabase/supabase";
 
-const StyledTitleInput = styled.input`
+const TitleInput = styled.input`
 	font-family: inherit;
 	font-weight: 800;
 	line-height: 48px;
@@ -23,7 +23,7 @@ const StyledTitleInput = styled.input`
 	}
 `;
 
-const StyledForm = styled.form`
+const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 `;
@@ -34,23 +34,23 @@ const StyledDiv = styled.div`
 	margin-bottom: 20px;
 `;
 
-// const StyledInput = styled.input`
-// 	font-family: inherit;
-// 	font-size: 30px;
-// 	font-weight: 500;
-// 	line-height: 48px;
-// 	text-align: left;
-// 	padding: 10px;
-// 	margin-bottom: 10px;
-// 	margin-top: 10px;
-// 	border: 4px solid #e7404a;
-// 	border-radius: 18px;
-// 	background-color: #333;
-// 	color: #fff; /* 흰색 글자 색상 */
-// 	padding-left: 35px;
-// `;
+const Input = styled.input`
+	font-family: inherit;
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 48px;
+	text-align: left;
+	padding: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	border: 4px solid #e7404a;
+	border-radius: 18px;
+	background-color: #333;
+	color: #fff; /* 흰색 글자 색상 */
+	padding-left: 35px;
+`;
 
-const StyledTextArea = styled.textarea`
+const TextArea = styled.textarea`
 	font-family: inherit;
 	padding: 10px;
 	border: 5px solid #b4b9c9;
@@ -64,7 +64,7 @@ const StyledTextArea = styled.textarea`
 	padding-left: 35px;
 `;
 
-const StyledButton = styled.button`
+const Button = styled.button`
 	font-family: inherit;
 	padding: 10px;
 	border: none;
@@ -87,26 +87,19 @@ const StyledButton = styled.button`
 `;
 
 function WritingEditForm() {
-	const { feedId } = useParams();
-	const navigate = useNavigate();
+	async function getSelectedNewsFeed() {
+		const { data: newsfeed, error } = await supabase.from("newsfeed").select("*").eq("id", feedId);
+		console.log(newsfeed);
+	}
+	getSelectedNewsFeed();
+	// const newsfeed = useSelector((state) => state.newsfeed.list);
+	// console.log(newsfeed);
 
 	const [formData, setFormData] = useState({
 		title: "",
-		content: ""
+		tags: "",
+		body: ""
 	});
-
-	async function getSelectedNewsFeed() {
-		const { data } = await supabase.from("newsfeed").select("*").eq("id", feedId);
-		const { title, content } = data[0];
-		setFormData({
-			title,
-			content
-		});
-	}
-
-	useEffect(() => {
-		getSelectedNewsFeed();
-	}, []);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -116,24 +109,16 @@ function WritingEditForm() {
 		});
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		await supabase
-			.from("newsfeed")
-			.update({
-				title: formData.title,
-				content: formData.content
-			})
-			.eq("id", feedId);
-		navigate(`/feed-read/${feedId}`);
 	};
 
 	return (
 		<div>
 			<div className="container">
-				<StyledForm onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit}>
 					<StyledDiv>
-						<StyledTitleInput
+						<TitleInput
 							type="text"
 							id="title"
 							name="title"
@@ -144,7 +129,7 @@ function WritingEditForm() {
 						<div style={{ borderBottom: "5px solid #b4b9c9", padding: "15px" }}></div>
 					</StyledDiv>
 					{/* <StyledDiv>
-						<StyledInput
+						<Input
 							type="text"
 							id="tags"
 							name="tags"
@@ -154,16 +139,16 @@ function WritingEditForm() {
 						/>
 					</StyledDiv> */}
 					<StyledDiv>
-						<StyledTextArea
-							id="content"
-							name="content"
+						<TextArea
+							id="body"
+							name="body"
 							placeholder="내용을 입력해주세요..."
-							value={formData.content}
+							value={formData.body}
 							onChange={handleChange}
-						></StyledTextArea>
+						></TextArea>
 					</StyledDiv>
-					<StyledButton type="submit">수정하기</StyledButton>
-				</StyledForm>
+					<Button type="submit">수정하기</Button>
+				</Form>
 			</div>
 		</div>
 	);
