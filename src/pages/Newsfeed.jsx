@@ -1,8 +1,8 @@
-import Header from "../components/Header";
-import MainBanner from "../components/MainBanner";
-import NewGames from "../components/NewGames";
-import NewsfeedList from "../components/NewsfeedList";
-import WriteButton from "../components/WriteButton";
+import Header from "../components/common/Header";
+import MainBanner from "../components/mainpage/MainBanner";
+import NewGames from "../components/mainpage/NewGames";
+import NewsfeedList from "../components/newsfeed/NewsfeedList";
+import WriteButton from "../components/newsfeed/WriteButton";
 
 function Newfeed() {
 	return (

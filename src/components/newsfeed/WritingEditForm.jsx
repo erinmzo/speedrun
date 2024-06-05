@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import supabase from "../supabase/supabase";
+import supabase from "../../supabase/supabase";
 
 const TitleInput = styled.input`
 	font-family: inherit;

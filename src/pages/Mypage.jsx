@@ -1,6 +1,6 @@
-import Header from "../components/Header";
-import MyNewsfeedList from "../components/MyNewsfeedList";
-import Profile from "../components/Profile";
+import Header from "../components/common/Header";
+import MyNewsfeedList from "../components/mypage/MyNewsfeedList";
+import Profile from "../components/mypage/Profile";
 
 function Mypage() {
 	return (

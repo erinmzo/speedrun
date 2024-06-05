@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import WritingEditForm from "../components/WritingEditForm";
+import Header from "../components/common/Header";
+import WritingEditForm from "../components/newsfeed/WritingEditForm";
 
 function FeedEdit() {
 	return (

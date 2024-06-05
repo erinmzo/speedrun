@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import supabase from "../supabase/supabase";
+import supabase from "../../supabase/supabase";
 
 const StyledTitleInput = styled.input`
 	font-family: inherit;

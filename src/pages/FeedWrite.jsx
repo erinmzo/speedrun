@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import WritingForm from "../components/WritingForm";
+import Header from "../components/common/Header";
+import WritingForm from "../components/newsfeed/WritingForm";
 
 function FeedWrite() {
 	return (

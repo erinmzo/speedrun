@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import supabase from "../supabase/supabase";
+import { styled } from "styled-components";
+import supabase from "../../supabase/supabase";
 
 const InputField = styled.input`
 	font-family: inherit;
@@ -71,7 +71,7 @@ function InputForm() {
 
 		try {
 			// Supabase 회원가입 로직
-			const { user, error } = await supabase.auth.signUp({
+			const { error } = await supabase.auth.signUp({
 				email: email,
 				password: password,
 				options: {

@@ -1,7 +1,7 @@
-import { styled } from "styled-components";
-import ProfileUpdateButton from "./ProfileUpdateButton";
 import { useEffect, useState } from "react";
-import supabase from "../supabase/supabase";
+import { styled } from "styled-components";
+import supabase from "../../supabase/supabase";
+import ProfileUpdateButton from "./ProfileUpdateButton";
 
 const Profile = () => {
 	const [profileUrl, setProfileUrl] = useState("");
@@ -19,7 +19,7 @@ const Profile = () => {
 		const fileObj = event.target.files[0];
 		setProfileObj(fileObj);
 		console.log(fileObj);
-		const { data, error } = await supabase.storage.from("avatars").upload(`avatar_${Date.now()}.png`, fileObj);
+		const { data } = await supabase.storage.from("avatars").upload(`avatar_${Date.now()}.png`, fileObj);
 		setProfileUrl(`https://piuvdfomheejtudrutht.supabase.co/storage/v1/object/public/avatars/${data.path}`);
 
 		// const { data, error } = await supabase.storage.from("avatars").upload("public/avatar1.png", fileObj);
@@ -34,7 +34,7 @@ const Profile = () => {
 				<StyledProfileBox>
 					<StyledProfileImgBox>
 						<StyledProfileImg src={profileUrl} />
-						<label for="file">
+						<label htmlFor="file">
 							<StyledUploadBtn>이미지 업로드</StyledUploadBtn>
 						</label>
 						<StyledImageChangeInput type="file" name="file" id="file" onChange={handleImageChange} />

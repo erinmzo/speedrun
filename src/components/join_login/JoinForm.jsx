@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import InputForm from "../components/InputForm";
+import InputForm from "./InputForm";
 
 function JoinForm() {
 	return (

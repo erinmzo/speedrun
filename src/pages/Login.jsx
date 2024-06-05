@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import LoginHeader from "../components/LoginHeader";
-import LoginInput from "../components/LoginInput";
-import LoginLinks from "../components/LoginLinks";
+import LoginHeader from "../components/join_login/LoginHeader";
+import LoginInput from "../components/join_login/LoginInput";
+import LoginLinks from "../components/join_login/LoginLinks";
 
 const StyledLoginBox = styled.div`
 	width: 1122px;

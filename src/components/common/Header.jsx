@@ -1,15 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { logInToggle, setCurrentUser } from "../redux/slices/user.slice";
+import { signOut } from "../../api/auth";
+import { logInToggle, setCurrentUser } from "../../redux/slices/user.slice";
 
 function Header() {
+	const navigate = useNavigate();
 	const isLogIn = useSelector((state) => state.user.isLogIn);
 	const currentUser = useSelector((state) => state.user.currentUserInfo);
 	const dispatch = useDispatch();
+	const signOutUser = async () => {
+		signOut();
+	};
 	const handleLogOut = () => {
+		signOutUser();
 		dispatch(logInToggle(false));
 		dispatch(setCurrentUser(null));
+		navigate("/");
 	};
 
 	return (

@@ -6,6 +6,7 @@ import Join from "../pages/Join";
 import Login from "../pages/Login";
 import Mypage from "../pages/Mypage";
 import Newsfeed from "../pages/Newsfeed";
+import Description from "../pages/Description";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 	{
 		path: "/join",
 		element: <Join />
+	},
+	{
+		path: "/Description",
+		element: <Description />
 	},
 	{
 		path: "/login",

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
-import { getNewsfeed } from "../api/feed";
-import { getInitalFeed } from "../redux/slices/newsfeed.slice";
+import { getNewsfeed } from "../../api/feed";
+import { getInitalFeed } from "../../redux/slices/newsfeed.slice";
 import NewsfeedItem from "./NewsfeedItem";
 
 function NewsfeedList() {
