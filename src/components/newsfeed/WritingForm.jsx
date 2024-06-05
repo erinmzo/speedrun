@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import supabase from "../../supabase/supabase";
+import Swal from "sweetalert2";
 
 const StyledTitleInput = styled.input`
 	font-family: inherit;
@@ -88,6 +89,12 @@ const StyledButton = styled.button`
 	}
 `;
 
+const ErrorMessage = styled.div`
+	color: red;
+	font-size: 16px;
+	margin-top: 10px;
+`;
+
 function WritingForm() {
 	const navigate = useNavigate();
 	const year = new Date().getFullYear();
@@ -100,6 +107,8 @@ function WritingForm() {
 		content: "",
 		userId: "userId"
 	});
+
+	const [error, setError] = useState("");
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -115,6 +124,12 @@ function WritingForm() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (!formData.title.trim() || !formData.content.trim()) {
+			setError("제목과 내용을 모두 입력해야 합니다.");
+			Swal.fire("제목과 내용을 모두 입력해야 합니다.");
+			return;
+		}
+		setError("");
 		addNewsfeed();
 		navigate(-1);
 	};
